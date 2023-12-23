@@ -24,6 +24,7 @@ app.on("ready",()=>{
 
 
 const getEnvs = async function getEnvs(){
+    getDataFoldersPath()
     if (process.platform === 'darwin') {
         // wallpaper = macos;
      } else if (process.platform === 'win32') {
@@ -31,4 +32,11 @@ const getEnvs = async function getEnvs(){
      } else {  
         await setLinuxWallpaper(imagePath)
      } 
+}
+
+const getDataFoldersPath = function getDataFoldersPath(){
+    var date  = new Date("January 01, 2021 09:38:00");
+    var month = date.getMonth();
+    var day   = date.getDate();
+    console.log(month,day)
 }
