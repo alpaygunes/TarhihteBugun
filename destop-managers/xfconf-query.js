@@ -9,7 +9,7 @@ module.exports.set = async function set(imagePath) {
 		'--channel',
 		'xfce4-desktop',
 		'--property',
-		'/backdrop/screen0/monitor0/image-path',
+		'/backdrop/screen0/monitorDP-1/workspace0/last-image',
 		'--set',
 		`${imagePath}`,
 	]);
