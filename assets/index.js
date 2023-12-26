@@ -63,3 +63,7 @@ ipcRenderer.on("okultipi_sec",()=>{
     settingMenu.style.display = "block";
     messsageBox.style.backgroundColor = "rgba(93, 93, 93, 0.719)";
 })
+
+ipcRenderer.on("gnome_bg_degisti",(err,imgrul)=>{
+    console.log(imgrul)
+})

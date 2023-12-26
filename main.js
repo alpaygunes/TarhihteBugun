@@ -30,6 +30,7 @@ app.on("ready", async () => {
             slashes: true
         })
     )
+    process.env.MAIN_WINDOW_ID = mainWindow.id;
 
     await getAll()
 })
