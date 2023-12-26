@@ -13,6 +13,8 @@ let imagePath = "/home/alpay/Resimler/bg.png"
 let okul_tipi = 'ilkokul'
 let mainWindow
 var hasWindowLoaded = false;
+var AutoLaunch = require('auto-launch');
+
 
 app.on("ready", async () => {
     mainWindow = new BrowserWindow({
@@ -31,7 +33,6 @@ app.on("ready", async () => {
 
     await getAll()
 })
-
 
 const getEnvs = async function getEnvs() {
     if (process.platform === 'darwin') {
@@ -138,3 +139,17 @@ ipcMain.on("change:type", async (err, type) => {
     })
 
 })
+
+
+
+// Linuz başlangıçta çalışma
+var autoLauncher = new AutoLaunch({
+    name: "Tarihte Bugün"
+});
+
+autoLauncher.isEnabled().then(function(isEnabled) {
+    if (isEnabled) return;
+     autoLauncher.enable();
+  }).catch(function (err) {
+    throw err;
+  });
