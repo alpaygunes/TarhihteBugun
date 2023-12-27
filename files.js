@@ -12,7 +12,12 @@ function getDataFoldersPath() {
     var month = date.getMonth();
     var day = date.getDate();
     let pth = path.join(month.toString(), day.toString())
-    return path.join(__dirname, 'data', pth);
+    if (process.env.APP_DEV){
+        return path.join(__dirname, 'data', pth);
+    }else{
+        return path.join(__dirname, '../..','data', pth);
+    }
+    
 }
 
 function getBgImages() {

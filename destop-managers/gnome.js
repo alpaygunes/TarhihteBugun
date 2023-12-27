@@ -17,7 +17,7 @@ module.exports.get = async function get() {
 }
 
 module.exports.set =  async function set(imagePath) {
-	const ID = process.env.MAIN_WINDOW_ID * 1;
+	//const ID = process.env.MAIN_WINDOW_ID * 1;
 	// console.log(BrowserWindow.fromId(ID)) 
 	// console.log(BrowserWindow.getFocusedWindow()) 
 	
@@ -27,6 +27,6 @@ module.exports.set =  async function set(imagePath) {
 		'picture-uri',
 		`file://${imagePath}`,
 	]);
-	BrowserWindow.getFocusedWindow().webContents.send("gnome_bg_degisti", a)
-	console.log(a)
+	//BrowserWindow.getFocusedWindow().webContents.send("gnome_bg_degisti", a)
+	//console.log(a)
 }

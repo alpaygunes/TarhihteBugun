@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
+    "start": "APP_DEV=true electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
@@ -18,7 +18,8 @@
           "**/*"
         ]
       }
-    ]
+    ],
+    "asar": false
   },
   "author": "alpaygunes@gmail.com",
   "license": "ISC",

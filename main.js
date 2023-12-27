@@ -10,7 +10,7 @@ const process = require("process");
 const { log } = require("console");
 const { start } = require("repl");
 let imagePath = "/home/alpay/Resimler/bg.png"
-let okul_tipi = 'ilkokul'
+let okul_tipi = ''
 let mainWindow
 var hasWindowLoaded = false;
 var AutoLaunch = require('auto-launch');
@@ -21,16 +21,20 @@ app.on("ready", async () => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-        }
+        },
+        show: false,
+        frame: false
     })
     mainWindow.loadURL(
         url.format({
             pathname: path.join(__dirname, "/assets/anasayfa.html"),
             protocol: "file:",
-            slashes: true
+            slashes: true,
         })
     )
-    process.env.MAIN_WINDOW_ID = mainWindow.id;
+    mainWindow.maximize();
+    mainWindow.show();
+    //process.env.MAIN_WINDOW_ID = mainWindow.id;
 
     await getAll()
 })
@@ -76,23 +80,24 @@ async function getAll() {
     // kayıtlı verileri okuyalım
     // read file
     const storage_path = app.getPath("userData")
-    fs.readFile(path.join(storage_path, '/user-data.json'), { encoding: 'utf-8' }, (err, data) => {
-        if (err) {
-            //eğer okul tipi yoksa ilk tüklemedir. okul tipi seçtirelim
-            // view yüklenmesi bitince datayı viewe gönder
-            // if (hasWindowLoaded) {
-            //     mainWindow.webContents.send("okultipi_sec", true)
-            // } else { 
-                mainWindow.webContents.on('did-finish-load', function () {
-                    mainWindow.webContents.send("okultipi_sec", true)
-                    hasWindowLoaded = true
-                });
-            // } 
-
-            return
-        }
-        okul_tipi = JSON.parse(data).okul_tipi
-    })
+    if (fs.existsSync(path.join(storage_path, '/user-data.json'))) { 
+        let get_type = new Promise((resolve, reject) => {
+            fs.readFile(path.join(storage_path, '/user-data.json'), { encoding: 'utf-8' }, (err, data) => {
+                if (err) {
+                    mainWindow.webContents.on('did-finish-load', function () {
+                        mainWindow.webContents.send("okultipi_sec", true)
+                        hasWindowLoaded = true
+                    }); 
+                    reject(err)
+                } 
+                resolve(JSON.parse(data).okul_tipi)
+            }) 
+        })
+        okul_tipi = await get_type
+    }else{
+        okul_tipi = "ilkokul"
+    }
+    
 
     await getFiles().then((data) => {
         let bg_images
